@@ -1,0 +1,34 @@
+{
+  "name": "Python Django Example App in DevContainer",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "web",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+  "containerEnv": {
+    "VIRTUAL_ENV": "/workspaces/${localWorkspaceFolderBasename}/.venv",
+    "PATH": "/workspaces/${localWorkspaceFolderBasename}/.venv/bin:${localEnv:PATH}"
+  },
+
+  "settings": {
+    "sqltools.connections": [{
+      "name": "Container database",
+      "driver": "PostgreSQL",
+      "previewLimit": 50,
+      "server": "python-django-example-app-in-devcontainer_db_1",
+      "port": 5432,
+      "database": "postgres",
+      "username": "postgres",
+      "password": "postgres"
+    }]
+  },
+
+  "extensions": [
+    "ms-python.python",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg"
+  ],
+
+  "forwardPorts": [8000, 5432],
+  
+  "postCreateCommand": "poetry run python3 django_example_app/manage.py runserver 0.0.0.0:8000" 
+}
